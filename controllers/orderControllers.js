@@ -11,26 +11,28 @@ module.exports.createOrders = async(req, res) => {
     const { userId, cartId } = req.body;
 
     const userCart = await Cart.findById({ _id: cartId });
+    
     const cartUserId = await userCart.userId.slice(1);
 
     //verify if cart is associated to the specific user before proceeding
 
     if (cartUserId === userId) {
         const amountValue = userCart.bill;
+        console.log(userId, "\n", cartId, "\n", userCart);
         try {
-            const order = await createOrder(amountValue);
-            res.json(order);
+            // const order = await createOrder(amountValue);
+            // res.json(order);
 
-            if (order.id) {
-                const items = userCart.items;
-                await Order.create({
-                    _id: order.id,
-                    userId,
-                    items,
-                    bill: amountValue,
-                    status: 'Processing'
-                });
-            }
+            const savedOrder = await Order.create({
+                // _id: userCart._id,
+                userId: userCart.userId,
+                items: userCart.items,
+                bill: amountValue,
+                status: 'Processing'
+            });
+            console.log(savedOrder);
+            res.status(201).json(savedOrder);
+
         } catch (err) {
             res.status(500).send(err.message);
         }

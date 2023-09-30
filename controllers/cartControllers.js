@@ -13,7 +13,7 @@ module.exports.getCart = async(req, res) => {
             res.send(null);
         }
     } catch (error) {
-        console.log(err);
+       
         res.status(500).send('Something went wrong');
     }
 };
@@ -68,7 +68,7 @@ module.exports.addToCart = async(req, res) => {
             return res.status(201).send(newCart);
         }
     } catch (error) {
-        console.log(error);
+  
         res.status(500).send('Something went wrong');
     }
 };
@@ -105,7 +105,7 @@ module.exports.updateCart = async(req, res) => {
             return res.status(201).send(cart);
         }
     } catch (error) {
-        console.log(error);
+
         res.status(500).send('something went worng!');
     }
 };
@@ -127,7 +127,7 @@ module.exports.deleteCartItem = async(req, res) => {
         cart = await cart.save();
         return res.status(201).json(cart);
     } catch (error) {
-        console.log(error);
+      
         res.status(500).send('Something went wrong');
     }
 };
